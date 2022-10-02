@@ -75,10 +75,9 @@ def voicemos_wav2vec_small(pretrained=True, progress=True, device='cpu'):
     ssl_model = model[0]
     ssl_model.remove_pretraining_modules()
     # load head
-    model = MosPredictor(ssl_model, SSL_OUT_DIM).to(device)
-    model.load_state_dict(mos_ckpt.to(device))
+    model = MosPredictor(ssl_model, SSL_OUT_DIM)
+    model.load_state_dict(mos_ckpt).to(device)
 
     logging.info(f"[MODEL] VoiceMOS wav2vec loaded with {sum([p.numel() for p in model.parameters()]):,d} parameters")
     return model
-
 
