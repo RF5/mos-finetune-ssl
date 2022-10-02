@@ -1,10 +1,34 @@
 # Finetune SSL models for MOS prediction
 
+**Forked from original repo to add torch hub integration. See torch hub quickstart section below.**
+
 This is code for our paper which has been accepted to ICASSP 2022:
 
 "Generalization Ability of MOS Prediction Networks"  Erica Cooper, Wen-Chin Huang, Tomoki Toda, Junichi Yamagishi  https://arxiv.org/abs/2110.02635
 
 Please cite this preprint if you use this code.
+
+## Quickstart using torch hub
+
+You can start using the fine-tuned wav2vec small checkpoint using torch hub. Steps:
+
+1. Ensure `fairseq`, `torch`, and `torchaudio` are installed.
+2. Run:
+
+    ```python
+    import torch
+    device = 'cpu' # or 'cuda'
+    emos_predictor = torch.hub.load(emos_path, 'voicemos_wav2vec_small')
+    emos_predictor = emos_predictor.to(device).eval()
+
+    x = waveform # a 16kHz waveform of shape (batch_size, T)
+    ##The model takes as input (bs, T) 16kHz waveforms, and returns
+    ## - `features`: wav2vec features from before the head, of shape (bs, seq_len, 768)
+    ## - `mos_prediction`: floating point MOS score from 1-5 of shape (bs,)
+    features, mos_prediction = emos_predictor(x)
+    ```
+
+Done!
 
 ## Dependencies:
 
