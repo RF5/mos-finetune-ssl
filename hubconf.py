@@ -65,7 +65,7 @@ def voicemos_wav2vec_small(pretrained=True, progress=True, device='cpu'):
         "https://github.com/RF5/mos-finetune-ssl/releases/download/v1.0/ckpt_w2vsmall.pt",
         progress=progress
     )
-    base_path = Path(torch.hub.get_dir())/'checkpoints'/'wav2vec_small.pt'
+    base_path = str(Path(torch.hub.get_dir())/'checkpoints'/'wav2vec_small.pt')
     
     device = torch.device(device)
     SSL_OUT_DIM = 768
